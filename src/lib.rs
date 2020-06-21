@@ -1,8 +1,8 @@
 use std::collections::HashMap;
 mod render;
-use std::io::Read;
 use fontdue::FontSettings;
 pub use render::*;
+use std::io::Read;
 
 pub type AtlasCharacterInfos = HashMap<char, CharacterInfos>;
 
@@ -57,7 +57,7 @@ where
             let bitmap = Bitmap {
                 width: metrics.width as i32,
                 rows: metrics.height as i32,
-                buffer: bitmap
+                buffer: bitmap,
             };
             // adding a left margin before our character to prevent artifacts
             cursor_offset.0 += MARGIN;
@@ -116,9 +116,10 @@ where
                     left_padding: left_side_bearing as f32,
                     right_padding: (metrics.advance_width
                         - bitmap.width as f32
-                        - left_side_bearing as f32)
-                        as f32,
-                    height_over_line: -(metrics.advance_height - bitmap.rows as f32 - metrics.bounds.ymin) as f32, // TODO not correct :\
+                        - left_side_bearing as f32) as f32,
+                    height_over_line: -(metrics.advance_height
+                        - bitmap.rows as f32
+                        - metrics.bounds.ymin) as f32, // TODO not correct :\
                 },
             ))
         })
@@ -188,7 +189,6 @@ pub enum Error {
     /// A glyph for this character is not present in font.
     NoGlyph(char),
 }
-
 
 /// RGBA8 font texture
 pub struct Texture {
@@ -260,7 +260,6 @@ fn flatten_ranges<'a>(ranges: impl Iterator<Item = &'a std::ops::Range<u32>>) ->
         .map(|c| std::char::from_u32(c).unwrap())
         .collect()
 }
-
 
 impl CharacterInfos {
     pub fn scale(&self, font_size: f32) -> CharacterInfos {
