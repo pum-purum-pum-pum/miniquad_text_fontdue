@@ -1,7 +1,8 @@
 # miniquad_text_fontdue
 
-## DO NOT USE. WIP
+## WIP
+## Currently mimic miniquad_text_rusttype. This may change. 
 
 Plan:
-* Reproduce miniquad_text_rusttype API
+* Reproduce miniquad_text_rusttype API \/
 * Instanced glyphs rendering

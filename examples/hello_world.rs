@@ -21,7 +21,7 @@ impl EventHandler for Stage {
             0.0, 0.0, 1.0, 0.0,
             -1.0, -1.0, 0.0, 1.0f32,
         ]).to_cols_array_2d();
-        quad_text::draw(ctx, &self.text, &self.system, matrix, (1.0, 1.0, 1.0, 1.0));
+        quad_text::draw(ctx, &self.text, &self.system, matrix, (0.9, 0.7, 0.1, 1.0));
     }
 }
 
@@ -31,7 +31,7 @@ fn main() {
         let font = quad_text::FontTexture::new(
             &mut ctx,
             &include_bytes!("../fonts/Roboto-Regular.ttf")[..],
-            100,
+            70,
             quad_text::FontAtlas::ascii_character_list(),
         )
         .unwrap();
