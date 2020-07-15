@@ -172,15 +172,10 @@ where
 }
 
 /// Function that will calculate the nearest power of two.
-fn get_nearest_po2(mut x: u32) -> u32 {
+fn get_nearest_po2(x: u32) -> u32 {
+    let bit_size = 8 * std::mem::size_of_val(&x) as u32;
     assert!(x > 0);
-    x -= 1;
-    x = x | (x >> 1);
-    x = x | (x >> 2);
-    x = x | (x >> 4);
-    x = x | (x >> 8);
-    x = x | (x >> 16);
-    x + 1
+    1 << (bit_size - (x - 1).leading_zeros())
 }
 
 ///
