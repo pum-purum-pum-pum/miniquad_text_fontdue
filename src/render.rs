@@ -53,7 +53,7 @@ impl FontTexture {
         font: R,
         font_size: u32,
         characters_list: I,
-    ) -> Result<FontTexture, Error>
+    ) -> Result<Self, Error>
     where
         R: Read,
         I: IntoIterator<Item = char>,
@@ -67,7 +67,7 @@ impl FontTexture {
             &atlas.texture.data[..],
         );
 
-        Ok(FontTexture {
+        Ok(Self {
             texture,
             character_infos: atlas.character_infos,
         })
@@ -143,7 +143,7 @@ mod shader {
 
 impl TextSystem {
     /// Builds a new text system that must be used to build `TextDisplay` objects.
-    pub fn new(ctx: &mut Context) -> TextSystem {
+    pub fn new(ctx: &mut Context) -> Self {
         let shader = Shader::new(ctx, shader::VERTEX, shader::FRAGMENT, shader::META);
 
         let pipeline = Pipeline::with_params(
@@ -164,7 +164,7 @@ impl TextSystem {
             },
         );
 
-        TextSystem { pipeline }
+        Self { pipeline }
     }
 }
 
@@ -173,8 +173,8 @@ where
     F: Deref<Target = FontTexture>,
 {
     /// Builds a new text display that allows you to draw text.
-    pub fn new(ctx: &mut Context, system: &TextSystem, texture: F, text: &str) -> TextDisplay<F> {
-        let mut text_display = TextDisplay {
+    pub fn new(ctx: &mut Context, system: &TextSystem, texture: F, text: &str) -> Self {
+        let mut text_display = Self {
             texture,
             total_text_width: 0.0,
             bindings: None,
