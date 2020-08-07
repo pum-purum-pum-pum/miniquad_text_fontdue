@@ -205,7 +205,7 @@ impl FontAtlas {
     /// texture.  Complexity grows as `font_size**2 * characters_list.len()`.
     /// **Avoid rasterizing everything at once as it will be slow and end up in
     /// out of memory abort.**
-    pub fn new<R, I>(font: R, font_size: u32, characters_list: I) -> Result<FontAtlas, Error>
+    pub fn new<R, I>(font: R, font_size: u32, characters_list: I) -> Result<Self, Error>
     where
         R: Read,
         I: IntoIterator<Item = char>,
@@ -218,7 +218,7 @@ impl FontAtlas {
         // building the infos
         let (texture, chr_infos) = build_font_image(&font, characters_list.into_iter(), font_size)?;
 
-        Ok(FontAtlas {
+        Ok(Self {
             texture,
             character_infos: chr_infos,
             font_size,
@@ -257,8 +257,8 @@ fn flatten_ranges<'a>(ranges: impl Iterator<Item = &'a std::ops::Range<u32>>) ->
 }
 
 impl CharacterInfos {
-    pub fn scale(&self, font_size: f32) -> CharacterInfos {
-        CharacterInfos {
+    pub fn scale(&self, font_size: f32) -> Self {
+        Self {
             tex_coords: self.tex_coords,
             tex_size: self.tex_size,
             size: (self.size.0 * font_size, self.size.1 * font_size),
